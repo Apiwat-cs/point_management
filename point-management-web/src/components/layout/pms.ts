@@ -3,7 +3,6 @@ import {
   TaskSquare,
   MoneyRecive,
   Wallet3,
-  KeySquare,
   Chart21,
 } from "iconsax-react";
 
@@ -21,14 +20,14 @@ export const pms = {
     },
     {
       id: "activity",
-      title: "กิจกรรม (Activity)",
+      title: "กิจกรรม",
       type: "item",
       url: "/activity",
       icon: TaskSquare,
     },
     {
       id: "point-rule",
-      title: "กติกาการให้แต้ม (Rule)",
+      title: "กติกาการให้แต้ม",
       type: "item",
       url: "/point-rule",
       icon: Building3,
@@ -42,17 +41,10 @@ export const pms = {
     },
     {
       id: "point-leaderboard",
-      title: "จัดอันดับ (Leaderboard)",
+      title: "จัดอันดับ",
       type: "item",
       url: "/leaderboard",
       icon: MoneyRecive,
-    },
-    {
-      id: "api-key",
-      title: "จัดการ API Key",
-      type: "item",
-      url: "/api-key",
-      icon: KeySquare,
     },
   ],
 };
