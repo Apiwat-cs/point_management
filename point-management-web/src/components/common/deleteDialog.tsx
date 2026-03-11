@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 
 // project-imports
-import { Trash } from "iconsax-react";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Slide } from "@mui/material";
 import type { TransitionProps } from "@mui/material/transitions";
 
@@ -50,7 +50,6 @@ const PmsDeleteDialog: React.FC<PmsDeleteDialogProps> = ({
   warning,
   infoMessage,
   showSwapOption,
-  swapTargetName,
   loading,
   isActive,
   itemName = "ข้อมูล",
@@ -105,7 +104,7 @@ const PmsDeleteDialog: React.FC<PmsDeleteDialogProps> = ({
                 color: "#FF4528",
               }}
             >
-              <Trash variant="Bold" />
+              <DeleteOutlineIcon fontSize="large" />
             </Avatar>
           </Box>
 

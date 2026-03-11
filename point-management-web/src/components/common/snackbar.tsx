@@ -1,36 +1,27 @@
-import React from 'react';
-import { Snackbar, Alert } from '@mui/material';
-import { SnackbarState } from '@/hooks/pms/usePmsNotification';
+import { Snackbar, Alert } from "@mui/material";
 
-interface PmsSnackbarProps {
-  state: SnackbarState;
+export default function PmsSnackbar({
+  state,
+  onClose,
+}: {
+  state: any;
   onClose: () => void;
-  autoHideDuration?: number;
-}
-
-const PmsSnackbar: React.FC<PmsSnackbarProps> = ({ state, onClose, autoHideDuration = 3000 }) => {
+}) {
   return (
     <Snackbar
       open={state.open}
-      autoHideDuration={autoHideDuration}
+      autoHideDuration={3000}
       onClose={onClose}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
     >
       <Alert
         onClose={onClose}
         severity={state.severity}
         variant="filled"
-        sx={{
-          width: '100%',
-          borderRadius: '12px',
-          fontWeight: 700,
-          color: '#fff'
-        }}
+        sx={{ width: "100%" }}
       >
         {state.message}
       </Alert>
     </Snackbar>
   );
-};
-
-export default PmsSnackbar;
+}

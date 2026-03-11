@@ -1,6 +1,20 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { FormControl, Select, MenuItem, SelectChangeEvent, CircularProgress, InputLabel, Box, ListSubheader, alpha } from '@mui/material';
-import { generatePastMonths, getCurrentMonthValue, MonthOption } from '@/utils/dateUtils';
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import {
+  FormControl,
+  Select,
+  MenuItem,
+  type SelectChangeEvent,
+  CircularProgress,
+  InputLabel,
+  Box,
+  ListSubheader,
+  alpha,
+} from "@mui/material";
+import {
+  generatePastMonths,
+  getCurrentMonthValue,
+  type MonthOption,
+} from "@/utils/dateUtils";
 
 interface ReportMonthPickerProps {
   /** Callback when API request is successful */
@@ -23,12 +37,14 @@ interface ReportMonthPickerProps {
 const ReportMonthPicker: React.FC<ReportMonthPickerProps> = ({
   onDataFetched,
   onError,
-  label = 'เลือกเดือนที่ต้องการ',
+  label = "เลือกเดือนที่ต้องการ",
   showLabel = false,
-  pastMonthsCount = 12
+  pastMonthsCount = 12,
 }) => {
   // 1. Controlled State: Initialized with current month (YYYY-MM)
-  const [selectedMonth, setSelectedMonth] = useState<string>(getCurrentMonthValue());
+  const [selectedMonth, setSelectedMonth] = useState<string>(
+    getCurrentMonthValue(),
+  );
   const [loading, setLoading] = useState<boolean>(false);
 
   // 2. memoized Options: Generated only once or when count changes
@@ -40,7 +56,7 @@ const ReportMonthPicker: React.FC<ReportMonthPickerProps> = ({
   const groupedOptions = useMemo(() => {
     const groups: Record<string, MonthOption[]> = {};
     monthOptions.forEach((option: MonthOption) => {
-      const year = option.label.split(' ')[1]; // Extract Buddhist Year
+      const year = option.label.split(" ")[1]; // Extract Buddhist Year
       if (!groups[year]) groups[year] = [];
       groups[year].push(option);
     });
@@ -50,18 +66,20 @@ const ReportMonthPicker: React.FC<ReportMonthPickerProps> = ({
   /**
    * Mock API Call: fetchReport
    */
-  const fetchReport = useCallback(async (month: string, signal: AbortSignal): Promise<void> => {
-    try {
-      setLoading(true);
-      if (onDataFetched) onDataFetched({ month, timestamp: Date.now() });
-      
-    } catch (err: unknown) {
-      if (err instanceof Error && err.name === 'AbortError') return;
-      if (onError && err instanceof Error) onError(err);
-    } finally {
-      if (!signal.aborted) setLoading(false);
-    }
-  }, [onDataFetched, onError]);
+  const fetchReport = useCallback(
+    async (month: string, signal: AbortSignal): Promise<void> => {
+      try {
+        setLoading(true);
+        if (onDataFetched) onDataFetched({ month, timestamp: Date.now() });
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name === "AbortError") return;
+        if (onError && err instanceof Error) onError(err);
+      } finally {
+        if (!signal.aborted) setLoading(false);
+      }
+    },
+    [onDataFetched, onError],
+  );
 
   // 3. Side Effect: Fetch data whenever selectedMonth changes
   useEffect(() => {
@@ -78,39 +96,39 @@ const ReportMonthPicker: React.FC<ReportMonthPickerProps> = ({
     <FormControl fullWidth size="small" disabled={loading}>
       {showLabel && <InputLabel id="month-picker-label">{label}</InputLabel>}
       <Select
-        labelId={showLabel ? 'month-picker-label' : undefined}
+        labelId={showLabel ? "month-picker-label" : undefined}
         value={selectedMonth}
         label={showLabel ? label : undefined}
         onChange={handleChange}
         renderValue={(value) => {
-          const selected = monthOptions.find(o => o.value === value);
+          const selected = monthOptions.find((o) => o.value === value);
           return selected ? selected.label : value;
         }}
         sx={{
-          borderRadius: '8px',
-          bgcolor: 'transparent',
-          height: showLabel ? undefined : '37px',
-          '& .MuiOutlinedInput-notchedOutline': {
-            border: 'none'
+          borderRadius: "8px",
+          bgcolor: "transparent",
+          height: showLabel ? undefined : "37px",
+          "& .MuiOutlinedInput-notchedOutline": {
+            border: "none",
           },
-          '&:hover .MuiOutlinedInput-notchedOutline': {
-            border: 'none'
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            border: "none",
           },
-          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            border: 'none'
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            border: "none",
           },
-          '& .MuiSelect-select': {
-            display: 'flex',
-            alignItems: 'center',
+          "& .MuiSelect-select": {
+            display: "flex",
+            alignItems: "center",
             fontWeight: 700,
-            color: '#1A69FF',
+            color: "#1A69FF",
             gap: 1,
-            py: showLabel ? undefined : '0 !important'
-          }
+            py: showLabel ? undefined : "0 !important",
+          },
         }}
         endAdornment={
           loading ? (
-            <Box sx={{ position: 'absolute', right: 35, display: 'flex' }}>
+            <Box sx={{ position: "absolute", right: 35, display: "flex" }}>
               <CircularProgress size={20} color="inherit" />
             </Box>
           ) : null
@@ -119,22 +137,26 @@ const ReportMonthPicker: React.FC<ReportMonthPickerProps> = ({
         {Object.entries(groupedOptions)
           .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
           .map(([year, options]) => [
-            <ListSubheader 
+            <ListSubheader
               key={`header-${year}`}
-              sx={{ 
-                fontWeight: 800, 
-                color: '#1A69FF', 
-                bgcolor: alpha('#1A69FF', 0.05),
-                lineHeight: '36px'
+              sx={{
+                fontWeight: 800,
+                color: "#1A69FF",
+                bgcolor: alpha("#1A69FF", 0.05),
+                lineHeight: "36px",
               }}
             >
               ปี พ.ศ. {year}
             </ListSubheader>,
             ...options.map((option: MonthOption) => (
-              <MenuItem key={option.value} value={option.value} sx={{ pl: 4, fontWeight: 500 }}>
-                {option.label.split(' ')[0]}
+              <MenuItem
+                key={option.value}
+                value={option.value}
+                sx={{ pl: 4, fontWeight: 500 }}
+              >
+                {option.label.split(" ")[0]}
               </MenuItem>
-            ))
+            )),
           ])}
       </Select>
     </FormControl>

@@ -12,7 +12,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { Notification } from "iconsax-react";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import { Slide, Avatar } from "@mui/material";
 import type { TransitionProps } from "@mui/material/transitions";
 
@@ -116,7 +116,7 @@ const PmsConfirmDialog: React.FC<PmsConfirmDialogProps> = ({
                 color: theme.palette[color].main,
               }}
             >
-              <Notification variant="Bold" />
+              <NotificationsNoneOutlinedIcon fontSize="large" />
             </Avatar>
           </Box>
 

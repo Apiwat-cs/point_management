@@ -1,14 +1,17 @@
-import React, { ReactNode } from 'react';
+import React, { type ReactNode } from "react";
 
 // material-ui
-import { Autocomplete, TextField, Typography, Box } from '@mui/material';
+import { Autocomplete, TextField, Typography, Box } from "@mui/material";
 
 interface SearchSelectProps<T> {
   options: T[];
   value: T | null;
   onChange: (value: T | null) => void;
   getOptionLabel: (option: T) => string;
-  renderOption?: (props: React.HTMLAttributes<HTMLLIElement>, option: T) => ReactNode;
+  renderOption?: (
+    props: React.HTMLAttributes<HTMLLIElement>,
+    option: T,
+  ) => ReactNode;
   isOptionEqualToValue?: (option: T, value: T) => boolean;
   placeholder?: string;
   error?: boolean;
@@ -25,12 +28,12 @@ function SearchSelect<T>({
   getOptionLabel,
   renderOption,
   isOptionEqualToValue,
-  placeholder = 'เลือกข้อมูล...',
+  placeholder = "เลือกข้อมูล...",
   error,
   helperText,
   disabled,
-  id = 'generic-search-select',
-  loading
+  id = "generic-search-select",
+  loading,
 }: SearchSelectProps<T>) {
   return (
     <Autocomplete
@@ -45,13 +48,14 @@ function SearchSelect<T>({
         onChange(newValue);
       }}
       isOptionEqualToValue={isOptionEqualToValue}
-      renderOption={renderOption || ((props, option) => (
-        <Box component="li" {...props}>
-          <Typography variant="body1">
-            {getOptionLabel(option)}
-          </Typography>
-        </Box>
-      ))}
+      renderOption={
+        renderOption ||
+        ((props, option) => (
+          <Box component="li" {...props}>
+            <Typography variant="body1">{getOptionLabel(option)}</Typography>
+          </Box>
+        ))
+      }
       renderInput={(params) => (
         <TextField
           {...params}
@@ -60,24 +64,26 @@ function SearchSelect<T>({
           helperText={helperText}
           size="small"
           sx={{
-            '& .MuiOutlinedInput-root': {
-              borderRadius: '12px',
-              fontFamily: 'Inter, sans-serif',
-              bgcolor: disabled ? '#F8FAFC' : '#fff',
-              '& fieldset': { borderColor: '#94A3B8' },
-              '&:hover fieldset': { borderColor: '#64748B' },
-              '&.Mui-focused fieldset': { borderColor: '#1A69FF' },
-              '&.Mui-disabled': {
-                bgcolor: '#F8FAFC',
-                '& fieldset': { borderColor: '#94A3B8' },
-                '& .MuiOutlinedInput-notchedOutline': { borderColor: '#94A3B8' },
-                WebkitTextFillColor: '#64748B'
-              }
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "12px",
+              fontFamily: "Inter, sans-serif",
+              bgcolor: disabled ? "#F8FAFC" : "#fff",
+              "& fieldset": { borderColor: "#94A3B8" },
+              "&:hover fieldset": { borderColor: "#64748B" },
+              "&.Mui-focused fieldset": { borderColor: "#1A69FF" },
+              "&.Mui-disabled": {
+                bgcolor: "#F8FAFC",
+                "& fieldset": { borderColor: "#94A3B8" },
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#94A3B8",
+                },
+                WebkitTextFillColor: "#64748B",
+              },
             },
-            '& .MuiInputBase-input.Mui-disabled': {
-              color: '#64748B',
-              WebkitTextFillColor: '#64748B'
-            }
+            "& .MuiInputBase-input.Mui-disabled": {
+              color: "#64748B",
+              WebkitTextFillColor: "#64748B",
+            },
           }}
         />
       )}

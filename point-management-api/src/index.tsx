@@ -44,6 +44,22 @@ app.use((req, res) => {
   });
 });
 
+app.use(
+  (
+    err: any,
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
+    console.error("[GlobalErrorHandler]", err);
+    res.status(err.status || 500).json({
+      status: "error",
+      message: err.message || "Internal Server Error",
+      payload: null,
+    });
+  },
+);
+
 app.listen(HOST_API_PORT, () => {
   console.log(`🚀 Express Server listening on port ${HOST_API_PORT}`);
 });

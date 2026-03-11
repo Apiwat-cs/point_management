@@ -46,7 +46,7 @@ const PmsSidebar: React.FC = () => {
         }}
       >
         <Typography variant="h6" fontWeight="bold" color="primary">
-          PMS Admin
+          Point Management
         </Typography>
       </Box>
 
