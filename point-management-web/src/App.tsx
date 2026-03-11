@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import RootLayout from "./components/layout/layout";
+
+// Pages
+import DashboardPage from "./pages/Dashboard";
+import ActivityPage from "./pages/Activity";
+import PointRulePage from "./pages/PointRule";
+import TransactionPage from "./pages/Transaction";
+import LeaderboardPage from "./pages/Leaderboard";
+import ApiKeyPage from "./pages/ApiKey";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+    primary: {
+      main: "#90caf9",
+    },
+    background: {
+      default: "#121212",
+      paper: "#1e1e1e",
+    },
+  },
+});
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<RootLayout />}>
+            <Route index element={<Navigate to="/dashboard" replace />} />
+            <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="activity" element={<ActivityPage />} />
+            <Route path="point-rule" element={<PointRulePage />} />
+            <Route path="transaction" element={<TransactionPage />} />
+            <Route path="leaderboard" element={<LeaderboardPage />} />
+            <Route path="api-key" element={<ApiKeyPage />} />
+            <Route
+              path="*"
+              element={<div style={{ padding: 24 }}>Page Not Found</div>}
+            />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
