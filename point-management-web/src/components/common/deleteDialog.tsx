@@ -50,7 +50,6 @@ const PmsDeleteDialog: React.FC<PmsDeleteDialogProps> = ({
   warning,
   infoMessage,
   showSwapOption,
-  swapTargetName,
   loading,
   isActive,
   itemName = "ข้อมูล",

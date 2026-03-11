@@ -17,9 +17,7 @@ interface BaseApiResponse {
 }
 
 const API_URL =
-  import.meta.env.VITE_PMS_APP_API_URL ||
-  import.meta.env.PMS_APP_API_URL ||
-  "http://localhost:3000/api/v1";
+  import.meta.env.VITE_PMS_APP_API_URL || "http://localhost:3000/api/v1";
 
 const instance: AxiosInstance = axios.create({
   baseURL: API_URL,
@@ -73,7 +71,6 @@ instance.interceptors.response.use(
     return response.data;
   },
   (error: AxiosError<BaseApiResponse>) => {
-    const originalRequest = error.config;
     const status = error.response?.status;
     const errorMessage =
       error.response?.data?.message ||

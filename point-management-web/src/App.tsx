@@ -1,14 +1,7 @@
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import RootLayout from "./components/layout/layout";
-
-// Pages
-import DashboardPage from "./pages/Dashboard";
-import ActivityPage from "./pages/Activity";
-import PointRulePage from "./pages/PointRule";
-import TransactionPage from "./pages/Transaction";
-import LeaderboardPage from "./pages/Leaderboard";
-import ApiKeyPage from "./pages/ApiKey";
+import { ActivityListPage, ActivityFormPage } from "./pages/activity";
 
 const darkTheme = createTheme({
   palette: {
@@ -31,12 +24,12 @@ function App() {
         <Routes>
           <Route path="/" element={<RootLayout />}>
             <Route index element={<Navigate to="/dashboard" replace />} />
-            <Route path="dashboard" element={<DashboardPage />} />
-            <Route path="activity" element={<ActivityPage />} />
-            <Route path="point-rule" element={<PointRulePage />} />
-            <Route path="transaction" element={<TransactionPage />} />
-            <Route path="leaderboard" element={<LeaderboardPage />} />
-            <Route path="api-key" element={<ApiKeyPage />} />
+
+            {/* Activity Routes */}
+            <Route path="activity" element={<ActivityListPage />} />
+            <Route path="activity/create" element={<ActivityFormPage />} />
+            <Route path="activity/edit/:id" element={<ActivityFormPage />} />
+
             <Route
               path="*"
               element={<div style={{ padding: 24 }}>Page Not Found</div>}
