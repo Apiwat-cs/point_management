@@ -1,41 +1,49 @@
-import { serve } from "bun";
-import index from "./index.html";
+import "reflect-metadata";
+import { initializePostgres } from "@/databases/postgres";
+import { initPointWorker } from "@/systems/worker/pointWorker";
+import express from "express";
+import routes from "@/routers/index";
+import config from "@/config/index";
+import helmet from "helmet";
+import cors from "cors";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import { swaggerOptions } from "./swagger/swaggerConfig";
 
-const server = serve({
-  routes: {
-    // Serve index.html for all unmatched routes.
-    "/*": index,
+// Initialize core systems
+initializePostgres();
+initPointWorker();
 
-    "/api/hello": {
-      async GET(req) {
-        return Response.json({
-          message: "Hello, world!",
-          method: "GET",
-        });
-      },
-      async PUT(req) {
-        return Response.json({
-          message: "Hello, world!",
-          method: "PUT",
-        });
-      },
-    },
+const app = express();
+const { HOST_API_PORT } = config.server || { HOST_API_PORT: 3000 };
 
-    "/api/hello/:name": async req => {
-      const name = req.params.name;
-      return Response.json({
-        message: `Hello, ${name}!`,
-      });
-    },
-  },
+app.use(cors());
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-  development: process.env.NODE_ENV !== "production" && {
-    // Enable browser hot reloading in development
-    hmr: true,
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+app.use(
+  "/api/docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    swaggerOptions: { defaultModelsExpandDepth: -1 },
+  }),
+);
 
-    // Echo console logs from the browser to the server
-    console: true,
-  },
+app.get("/", (req, res) => {
+  res.send("Point Management API is running");
 });
 
-console.log(`🚀 Server running at ${server.url}`);
+app.use("/api/v1", routes);
+
+app.use((req, res) => {
+  res.status(404).json({
+    message: "Not Found",
+  });
+});
+
+app.listen(HOST_API_PORT, () => {
+  console.log(`🚀 Express Server listening on port ${HOST_API_PORT}`);
+});
