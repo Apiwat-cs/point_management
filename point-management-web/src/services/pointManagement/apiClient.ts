@@ -16,8 +16,7 @@ interface BaseApiResponse {
   errorCode?: string;
 }
 
-const API_URL =
-  import.meta.env.VITE_PMS_APP_API_URL || "http://localhost:3000/api/v1";
+const API_URL = import.meta.env.VITE_PMS_APP_API_URL || "/api/v1";
 
 const instance: AxiosInstance = axios.create({
   baseURL: API_URL,
