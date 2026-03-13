@@ -7,6 +7,13 @@ const ActivityFormPage = lazy(
   () => import("@/pages/activity/ActivityFormPage"),
 );
 
+const PointRuleListPage = lazy(
+  () => import("@/pages/pointRule/PointRuleListPage"),
+);
+const PointRuleFormPage = lazy(
+  () => import("@/pages/pointRule/PointRuleFormPage"),
+);
+
 export const pmsRoutes = [
   {
     index: true,
@@ -26,6 +33,23 @@ export const pmsRoutes = [
       {
         path: "edit/:id",
         element: <ActivityFormPage />,
+      },
+    ],
+  },
+  {
+    path: "point-rule",
+    children: [
+      {
+        index: true,
+        element: <PointRuleListPage />,
+      },
+      {
+        path: "create",
+        element: <PointRuleFormPage />,
+      },
+      {
+        path: "edit/:id",
+        element: <PointRuleFormPage />,
       },
     ],
   },

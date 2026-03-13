@@ -34,6 +34,13 @@ export interface Activity {
   createdAt?: string;
 }
 
+export interface ActivityOption {
+  id: string;
+  code: string;
+  displayTh: string;
+  displayEn: string;
+}
+
 export interface PointRule {
   id: string;
   activityId: string;
@@ -43,6 +50,12 @@ export interface PointRule {
   status: "active" | "inactive";
   createDate?: string;
   createdAt?: string;
+}
+
+export interface PointRulePayload {
+  activityId: string;
+  point: number;
+  status: "active" | "inactive";
 }
 
 export interface PointTransaction {
