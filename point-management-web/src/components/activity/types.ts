@@ -7,8 +7,6 @@ export interface ActivityDashboardProps {
   onDelete: (id: string) => void | Promise<void>;
   onAdd?: () => void;
   search?: string;
-  onSearch?: (search: string) => void;
-  onPageChange?: (page: number, pageSize: number) => void;
   onParamsChange?: (params: {
     search?: string;
     page?: number;
