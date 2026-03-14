@@ -1,22 +1,18 @@
 import React, { useMemo } from "react";
 
 // material-ui
-import { Stack, Tooltip, IconButton, Box, alpha, Button } from "@mui/material";
+import { Stack, Tooltip, IconButton, alpha } from "@mui/material";
 
 // assets
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import AddIcon from "@mui/icons-material/Add";
 
 // tanstack table
 import type { ColumnDef, Row } from "@tanstack/react-table";
 
 // project components
-import ReactTable from "@/components/common/ReactTable";
-import type {
-  TableDataProps,
-  SearchCustomProps,
-} from "@/components/common/ReactTable";
+import MainDashboard from "@/components/common/MainDashboard";
+import type { TableDataProps } from "@/components/common/ReactTable";
 
 // local types
 import type { Activity, ActivityDashboardProps } from "./types";
@@ -79,8 +75,6 @@ const ActivityDashboard: React.FC<ActivityDashboardProps> = ({
   onEdit,
   onDelete,
   onAdd,
-  onSearch,
-  onPageChange,
   onParamsChange,
   loading,
   pagination: customPagination,
@@ -153,50 +147,16 @@ const ActivityDashboard: React.FC<ActivityDashboardProps> = ({
     [activities],
   );
 
-  const handleTableChange = (filter: SearchCustomProps) => {
-    if (onParamsChange) {
-      onParamsChange({
-        search: filter.search != null ? String(filter.search) : undefined,
-        page: filter.page,
-        pageSize: filter.pageSize,
-      });
-    } else {
-      // Fallback to old handlers
-      if (onSearch && filter.search !== undefined) {
-        onSearch(String(filter.search));
-      }
-      if (
-        onPageChange &&
-        (filter.page !== undefined || filter.pageSize !== undefined)
-      ) {
-        onPageChange(filter.page || 1, filter.pageSize || 10);
-      }
-    }
-  };
-
   return (
-    <Box
-      sx={{
-        width: "100%",
-        overflowX: "auto",
-      }}
-    >
-      <ReactTable
-        loading={loading}
-        data={tableData as unknown as TableDataProps[]}
-        defaultColumns={columns}
-        pagination={pagination}
-        setData={() => {}}
-        onSearch={handleTableChange}
-        actions={
-          onAdd && (
-            <Button variant="contained" startIcon={<AddIcon />} onClick={onAdd}>
-              สร้าง Activity
-            </Button>
-          )
-        }
-      />
-    </Box>
+    <MainDashboard
+      loading={loading}
+      data={tableData as unknown as TableDataProps[]}
+      columns={columns}
+      pagination={pagination}
+      onParamsChange={onParamsChange}
+      onAdd={onAdd}
+      addButtonLabel="สร้าง Activity"
+    />
   );
 };
 
