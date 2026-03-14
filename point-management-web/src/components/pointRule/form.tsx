@@ -188,6 +188,7 @@ const PointRuleForm: React.FC<PointRuleFormProps> = ({
                       fullWidth
                       size="small"
                       type="number"
+                      disabled={!!initialData}
                       error={!!errors.point}
                       helperText={errors.point?.message}
                     />
@@ -219,7 +220,9 @@ const PointRuleForm: React.FC<PointRuleFormProps> = ({
                         <Switch
                           checked={field.value === "active"}
                           onChange={(e) =>
-                            field.onChange(e.target.checked ? "active" : "inactive")
+                            field.onChange(
+                              e.target.checked ? "active" : "inactive",
+                            )
                           }
                         />
                       }
