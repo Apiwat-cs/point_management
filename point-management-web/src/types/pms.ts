@@ -82,3 +82,22 @@ export interface LeaderboardEntry {
   avatar?: string;
   displayName?: string;
 }
+
+export interface ApiKey {
+  id: string;
+  systemName: string;
+  environment: string;
+  salt: string;
+  hashedKey: string;
+  expiredAt: string;
+  isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface TriggerPointPayload {
+  activityCode: string;
+  userId: string;
+  referenceId?: string;
+  metadata?: Record<string, any> | string;
+}

@@ -46,5 +46,12 @@ export const pms = {
       url: "/leaderboard",
       icon: MoneyRecive,
     },
+    {
+      id: "playground",
+      title: "Playground",
+      type: "item",
+      url: "/playground",
+      icon: TaskSquare,
+    },
   ],
 };

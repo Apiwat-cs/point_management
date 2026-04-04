@@ -1,18 +1,12 @@
-import { lazy } from "react";
 import { Navigate } from "react-router-dom";
 
-// import { ActivityListPage, ActivityFormPage } from "@/pages/activity";
-const ActivityListPage = lazy(() => import("@/pages/activity/list"));
-const ActivityFormPage = lazy(
-  () => import("@/pages/activity/ActivityFormPage"),
-);
+import ActivityListPage from "@/pages/activity/list";
+import ActivityFormPage from "@/pages/activity/ActivityFormPage";
 
-const PointRuleListPage = lazy(
-  () => import("@/pages/pointRule/PointRuleListPage"),
-);
-const PointRuleFormPage = lazy(
-  () => import("@/pages/pointRule/PointRuleFormPage"),
-);
+import PointRuleListPage from "@/pages/pointRule/PointRuleListPage";
+import PointRuleFormPage from "@/pages/pointRule/PointRuleFormPage";
+
+import PlaygroundPage from "@/pages/playground/PlaygroundPage";
 
 export const pmsRoutes = [
   {
@@ -52,5 +46,9 @@ export const pmsRoutes = [
         element: <PointRuleFormPage />,
       },
     ],
+  },
+  {
+    path: "playground",
+    element: <PlaygroundPage />,
   },
 ];
