@@ -7,6 +7,7 @@ import PointRuleListPage from "@/pages/pointRule/PointRuleListPage";
 import PointRuleFormPage from "@/pages/pointRule/PointRuleFormPage";
 
 import PlaygroundPage from "@/pages/playground/PlaygroundPage";
+import PointTransactionListPage from "@/pages/pointTransaction/PointTransactionListPage";
 
 export const pmsRoutes = [
   {
@@ -50,5 +51,9 @@ export const pmsRoutes = [
   {
     path: "playground",
     element: <PlaygroundPage />,
+  },
+  {
+    path: "transaction",
+    element: <PointTransactionListPage />,
   },
 ];
